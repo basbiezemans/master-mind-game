@@ -8,40 +8,51 @@ elem : comparable -> List comparable -> Bool
 elem x xs =
     any ((==) x) xs
 
--- Delete the first occurrence of a list element
+
 delete : comparable -> List comparable -> List comparable
 delete x xs =
     deleteBy (==) x xs
+
 
 deleteBy : (a -> a -> Bool) -> a -> List a -> List a
 deleteBy equal x xs =
     case xs of
         [] ->
             []
-        (y :: ys) ->
+
+        y :: ys ->
             if equal x y then
                 ys
+
             else
                 y :: deleteBy equal x ys
+
 
 flip : (a -> b -> c) -> b -> a -> c
 flip function x y =
     function y x
 
-zip : List a -> List b -> List (a, b)
+
+zip : List a -> List b -> List ( a, b )
 zip xs ys =
     List.map2 Tuple.pair xs ys
 
-uncurry : (a -> b -> c) -> ((a, b) -> c)
+
+uncurry : (a -> b -> c) -> (( a, b ) -> c)
 uncurry function args =
     function (first args) (second args)
 
-unequal : List (comparable, comparable) -> List (comparable, comparable)
+
+unequal : List ( comparable, comparable ) -> List ( comparable, comparable )
 unequal pairs =
     filter (uncurry (/=)) pairs
+
 
 maybe : b -> (a -> b) -> Maybe a -> b
 maybe defaultVal function maybeVal =
     case maybeVal of
-        Nothing -> defaultVal
-        Just val -> function val
+        Nothing ->
+            defaultVal
+
+        Just val ->
+            function val
