@@ -149,9 +149,20 @@ updateGuess digit model =
 
 removeLastDigit : Model -> Model
 removeLastDigit model =
+    let
+        guessLength =
+            Guess.length model.guess
+
+        buttonState =
+            if guessLength <= 1 then
+                InitialState
+
+            else
+                SelectState
+    in
     { model
         | guess = Guess.pop model.guess
-        , gamestate = Play SelectState
+        , gamestate = Play buttonState
     }
 
 
