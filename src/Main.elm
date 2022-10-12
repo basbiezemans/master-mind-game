@@ -475,29 +475,21 @@ keyDecoder model =
 
 handleKeyEvent : GameState -> String -> Msg
 handleKeyEvent gameState keyValue =
-    case gameState of
-        Play _ ->
-            handleAnyKey keyValue
-
-        _ ->
-            if keyValue == "Enter" then
-                NewGame
-
-            else
-                Void
-
-
-handleAnyKey : String -> Msg
-handleAnyKey keyValue =
-    case keyValue of
-        "Backspace" ->
+    case ( gameState, keyValue ) of
+        ( Play _, "Backspace" ) ->
             Deselect
 
-        "Enter" ->
+        ( Play _, "Enter" ) ->
             GuessSecret
 
-        _ ->
+        ( Play _, _ ) ->
             handleCharKey keyValue
+
+        ( _, "Enter" ) ->
+            NewGame
+
+        _ ->
+            Void
 
 
 handleCharKey : String -> Msg
