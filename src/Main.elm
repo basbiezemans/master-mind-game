@@ -154,11 +154,11 @@ removeLastDigit model =
             Guess.length model.guess
 
         buttonState =
-            if guessLength <= 1 then
-                InitialState
+            if guessLength > 1 then
+                SelectState
 
             else
-                SelectState
+                InitialState
     in
     { model
         | guess = Guess.pop model.guess
