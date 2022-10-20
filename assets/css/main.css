@@ -8,22 +8,22 @@ body {
 
   font-size: 18px;
   margin: 0;
-  color: #293c4b;
+  background-color: #F29F05;
+}
+
+div.rounded {
+  border-radius: 25px;
 }
 
 h1 {
   font-size: 30px;
+  color: #1B5084;
   text-align: center;
 }
 
-ul {
-  list-style: none;
-  width: 510px;
-  background-color: #ececec;
-}
-
-img {
-  margin: 20px 0;
+p.sorry {
+  color: #293C4B;
+  text-align: center;
 }
 
 span {
@@ -34,22 +34,25 @@ button {
   padding: 10px 20px;
   margin: 5px;
   border: none;
-  border-radius: 3px;
+  border-radius: 25px;
   cursor: pointer;
-  background-color: #a7dbdb;
+  color: white;
+  font-size: 100%;
+  background-color: #0487D9;
+}
+
+button:hover {
+  background-color: #1B5084;
 }
 
 button:disabled {
   cursor: auto;
-  background-color: #e0e4cc;
+  background-color: #0FB2F2;
 }
 
-div.guess {
-  font-size: 30px;
-  text-align: center;
-  letter-spacing: 5px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+button.play {
+  width: 550px;
+  margin: 15px 0;
 }
 
 div.content {
@@ -57,16 +60,39 @@ div.content {
   width: 550px;
 }
 
-div.score {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  background-color: #ececec;
+div.box {
+  padding: 10px;
+  margin-top: 10px;
 }
 
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 500px;
+div.score {
+  justify-content: space-between;
+  display: flex;
+  padding: 10px 20px;
+  background-color: #F2CB05;
+}
+
+div.main {
+  background-color: white;
+}
+
+div.guess, div.secret {
+  font-size: 30px;
+  color: #293C4B;
+  text-align: center;
+  letter-spacing: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+div.buttons {
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+div.feedback {
+  padding-left: 20px;
+  margin-bottom: 15px;
+  background-color: #F2CB05;
 }

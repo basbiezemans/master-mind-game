@@ -5,8 +5,8 @@ import Browser.Events exposing (onKeyDown)
 import Dict
 import Feedback exposing (Feedback, makeFeedback)
 import Guess exposing (Guess(..))
-import Html exposing (Html, br, button, div, h1, img, li, p, span, text, ul)
-import Html.Attributes exposing (class, disabled, src, title)
+import Html exposing (Html, br, button, div, h1, img, p, span, text)
+import Html.Attributes exposing (class, disabled, src, title, width)
 import Html.Events exposing (onClick)
 import Json.Decode as Decode exposing (decodeString, dict)
 import Json.Encode as Encode
@@ -285,11 +285,10 @@ view model =
             String.fromInt model.score.codeMaker
     in
     div [ class "content" ]
-        [ div [ class "score" ]
+        [ div [ class "box score rounded" ]
             [ span [] [ text ("Code Maker: " ++ mkrPoints) ]
             , span [] [ text ("Code Breaker: " ++ bkrPoints) ]
             ]
-        , h1 [ class "center" ] [ text "Master Mind" ]
         , case model.gamestate of
             Play _ ->
                 viewPlay model
@@ -372,27 +371,44 @@ viewPlay model =
             model.gamestate
     in
     div []
-        [ div [ class "guess" ] [ span [] [ text (currentGuess model) ] ]
-        , div [ class "center" ]
+        [ div
+            [ class "box main rounded" ]
+            [ h1 [] [ text "Master Mind" ]
+            , div [ class "guess" ] [ text (currentGuess model) ]
+            ]
+        , div
+            [ class "box buttons" ]
             (deselectButton state :: selectButtons state ++ [ guessButton state ])
-        , ul [ class "prev-guesses" ] previousGuesses
+        , div
+            [ class "box feedback rounded" ]
+            previousGuesses
         ]
 
 
 viewWon : Html Msg
 viewWon =
     div []
-        [ img [ src "assets/img/you-win.gif", title "You win!", class "center" ] []
-        , br [ class "break" ] []
-        , button [ onClick NewGame, class "center" ] [ text "Play Again" ]
+        [ div
+            [ class "box main rounded" ]
+            [ img [ src "assets/img/you-win.gif", title "You win!", width 530 ] [] ]
+        , button
+            [ class "play", onClick NewGame ]
+            [ text "Play Again" ]
         ]
 
 
 viewLost : Secret -> Html Msg
 viewLost secret =
     div []
-        [ p [ class "center" ] [ text ("You lost. The code was " ++ Secret.toString secret) ]
-        , button [ onClick NewGame, class "center" ] [ text "Play Again" ]
+        [ div
+            [ class "box main rounded" ]
+            [ h1 [] [ text "Master Mind" ]
+            , p [ class "sorry" ] [ text "Sorry, you lost. The secret code was:" ]
+            , div [ class "secret" ] [ text (Secret.toString secret) ]
+            ]
+        , button
+            [ class "play", onClick NewGame ]
+            [ text "Play Again" ]
         ]
 
 
@@ -402,7 +418,7 @@ toListItem itemMarker ( guess, feedback ) =
         marker =
             String.padRight 3 ' ' itemMarker
     in
-    li [] [ text (marker ++ Guess.toString guess ++ " | " ++ Feedback.toString feedback) ]
+    p [] [ text (marker ++ Guess.toString guess ++ " | " ++ Feedback.toString feedback) ]
 
 
 itemMarkers : List String
