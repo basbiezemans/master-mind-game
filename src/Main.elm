@@ -6,7 +6,7 @@ import Dict
 import Feedback exposing (Feedback, makeFeedback)
 import Guess exposing (Guess(..))
 import Html exposing (Html, br, button, div, h1, img, p, span, text)
-import Html.Attributes exposing (class, disabled, src, title, width)
+import Html.Attributes exposing (class, disabled, src, title)
 import Html.Events exposing (onClick)
 import Json.Decode as Decode exposing (decodeString, dict)
 import Json.Encode as Encode
@@ -377,8 +377,10 @@ viewPlay model =
             , div [ class "guess" ] [ text (currentGuess model) ]
             ]
         , div
-            [ class "box buttons" ]
-            (deselectButton state :: selectButtons state ++ [ guessButton state ])
+            [ class "buttons" ]
+            [ div [ class "box left" ] (deselectButton state :: selectButtons state)
+            , div [ class "box right" ] [ guessButton state ]
+            ]
         , div
             [ class "box feedback rounded" ]
             previousGuesses
@@ -390,10 +392,12 @@ viewWon =
     div []
         [ div
             [ class "box main rounded" ]
-            [ img [ src "assets/img/you-win.gif", title "You win!", width 530 ] [] ]
-        , button
-            [ class "play", onClick NewGame ]
-            [ text "Play Again" ]
+            [ img [ src "assets/img/you-win.gif", title "You win!", class "congrats" ] [] ]
+        , div [ class "box play" ]
+            [ button
+                [ class "play", onClick NewGame ]
+                [ text "Play Again" ]
+            ]
         ]
 
 
@@ -406,9 +410,11 @@ viewLost secret =
             , p [ class "sorry" ] [ text "Sorry, you lost. The secret code was:" ]
             , div [ class "secret" ] [ text (Secret.toString secret) ]
             ]
-        , button
-            [ class "play", onClick NewGame ]
-            [ text "Play Again" ]
+        , div [ class "box play" ]
+            [ button
+                [ class "play", onClick NewGame ]
+                [ text "Play Again" ]
+            ]
         ]
 
 

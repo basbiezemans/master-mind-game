@@ -26,13 +26,20 @@ p.sorry {
   text-align: center;
 }
 
+img.congrats {
+  width: 570px;
+  margin: auto;
+  display: block;
+  min-width: 50%;
+  max-width: 100%;
+}
+
 span {
   padding: 5px;
 }
 
 button {
   padding: 10px 20px;
-  margin: 5px;
   border: none;
   border-radius: 25px;
   cursor: pointer;
@@ -51,18 +58,19 @@ button:disabled {
 }
 
 button.play {
-  width: 550px;
-  margin: 15px 0;
+  width: 100%;
 }
 
 div.content {
   margin: auto;
-  width: 550px;
+  width: 570px;
+  min-width: 50%;
+  max-width: 100%;
 }
 
 div.box {
   padding: 10px;
-  margin-top: 10px;
+  margin: 10px 10px 0 10px;
 }
 
 div.score {
@@ -85,14 +93,40 @@ div.guess, div.secret {
   margin-bottom: 10px;
 }
 
-div.buttons {
-  padding: 0;
-  display: flex;
-  justify-content: space-between;
+div.play {
+  margin: 0;
+  padding: 15px 10px;
 }
 
 div.feedback {
   padding-left: 20px;
   margin-bottom: 15px;
   background-color: #F2CB05;
+}
+
+div.left {
+  padding-left: 0;
+  margin-right: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+div.right {
+  padding: 10px 0;
+  margin-left: 0;
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 500px) {
+  div.buttons {
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    width: 100%;
+  }
+  div.left {
+    width: 75%;
+  }
 }
