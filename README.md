@@ -10,3 +10,6 @@ Mastermind code-breaking game as a GUI application
 ```bash
 $ elm make src/Main.elm --output app.js
 ```
+
+## Try it on Glitch
+https://master-mind-game.glitch.me/
