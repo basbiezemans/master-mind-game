@@ -302,6 +302,11 @@ currentGuess model =
         |> String.padRight 4 '_'
 
 
+previousGuesses : Model -> List (Html Msg)
+previousGuesses model =
+    List.map2 toListItem itemMarkers model.guesses
+
+
 isDisabled : ButtonType -> GameState -> Bool
 isDisabled button state =
     case ( button, state ) of
@@ -356,9 +361,6 @@ selectButtons state =
 viewPlay : Model -> Html Msg
 viewPlay model =
     let
-        previousGuesses =
-            List.map2 toListItem itemMarkers model.guesses
-
         state =
             model.gamestate
     in
@@ -375,16 +377,12 @@ viewPlay model =
             ]
         , div
             [ class "box feedback rounded" ]
-            previousGuesses
+            (previousGuesses model)
         ]
 
 
 viewWon : Model -> Html Msg
 viewWon model =
-    let
-        previousGuesses =
-            List.map2 toListItem itemMarkers model.guesses
-    in
     div []
         [ div
             [ class "box main rounded" ]
@@ -396,16 +394,12 @@ viewWon model =
             ]
         , div
             [ class "box feedback rounded" ]
-            previousGuesses
+            (previousGuesses model)
         ]
 
 
 viewLost : Model -> Html Msg
 viewLost model =
-    let
-        previousGuesses =
-            List.map2 toListItem itemMarkers model.guesses
-    in
     div []
         [ div
             [ class "box main rounded" ]
@@ -420,7 +414,7 @@ viewLost model =
             ]
         , div
             [ class "box feedback rounded" ]
-            previousGuesses
+            (previousGuesses model)
         ]
 
 
