@@ -187,8 +187,16 @@ equalCode (Guess xs) (Secret ys) =
 evaluateGuess : Model -> Model
 evaluateGuess model =
     let
-        latest =
+        feedback =
+            makeFeedback model.secret model.guess
+
+        incremented =
             incCounter model
+
+        latest =
+            { incremented
+                | guesses = model.guesses ++ [ ( model.guess, feedback ) ]
+            }
     in
     if equalCode latest.guess model.secret then
         setGameState Won (addCodeBreakerPoint latest)
@@ -197,16 +205,8 @@ evaluateGuess model =
         setGameState Lost (addCodeMakerPoint latest)
 
     else
-        let
-            feedback =
-                makeFeedback model.secret latest.guess
-
-            guess =
-                ( latest.guess, feedback )
-        in
         { latest
-            | guesses = latest.guesses ++ [ guess ]
-            , guess = Guess.empty
+            | guess = Guess.empty
             , gamestate = Play InitialState
         }
 
@@ -294,10 +294,10 @@ view model =
                 viewPlay model
 
             Won ->
-                viewWon
+                viewWon model
 
             Lost ->
-                viewLost model.secret
+                viewLost model
         ]
 
 
@@ -387,8 +387,12 @@ viewPlay model =
         ]
 
 
-viewWon : Html Msg
-viewWon =
+viewWon : Model -> Html Msg
+viewWon model =
+    let
+        previousGuesses =
+            List.map2 toListItem itemMarkers model.guesses
+    in
     div []
         [ div
             [ class "box main rounded" ]
@@ -398,23 +402,33 @@ viewWon =
                 [ class "play", onClick NewGame ]
                 [ text "Play Again" ]
             ]
+        , div
+            [ class "box feedback rounded" ]
+            previousGuesses
         ]
 
 
-viewLost : Secret -> Html Msg
-viewLost secret =
+viewLost : Model -> Html Msg
+viewLost model =
+    let
+        previousGuesses =
+            List.map2 toListItem itemMarkers model.guesses
+    in
     div []
         [ div
             [ class "box main rounded" ]
             [ h1 [] [ text "Master Mind" ]
             , p [ class "sorry" ] [ text "Sorry, you lost. The secret code was:" ]
-            , div [ class "secret" ] [ text (Secret.toString secret) ]
+            , div [ class "secret" ] [ text (Secret.toString model.secret) ]
             ]
         , div [ class "box play" ]
             [ button
                 [ class "play", onClick NewGame ]
                 [ text "Play Again" ]
             ]
+        , div
+            [ class "box feedback rounded" ]
+            previousGuesses
         ]
 
 
