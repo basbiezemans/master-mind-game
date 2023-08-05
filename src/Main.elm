@@ -5,7 +5,7 @@ import Browser.Events exposing (onKeyDown)
 import Dict
 import Feedback exposing (Feedback, makeFeedback)
 import Guess exposing (Guess(..))
-import Html exposing (Html, br, button, div, h1, img, p, span, text)
+import Html exposing (Html, button, div, h1, img, p, span, text)
 import Html.Attributes exposing (class, disabled, src, title)
 import Html.Events exposing (onClick)
 import Json.Decode as Decode exposing (decodeString, dict)
@@ -19,14 +19,6 @@ import Utils exposing (maybe)
 
 
 ---- MODEL ----
-
-
-type CodeMaker
-    = CodeMaker Int
-
-
-type CodeBreaker
-    = CodeBreaker Int
 
 
 type ButtonState
