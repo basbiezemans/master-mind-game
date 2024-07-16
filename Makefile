@@ -11,7 +11,7 @@ install-npm-packages:
 	npm install elm-format -g
 
 format:
-	elm-format src/*.elm
+	elm-format src/ --yes
 
 test:
 	npx elm-test
