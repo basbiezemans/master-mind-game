@@ -5,11 +5,13 @@ install-elm:
 	sudo mv elm /usr/local/bin/
 	elm --help
 
-install-elm-test:
-	npm install --save-dev elm-test
-
-install-uglify:
+install-npm-packages:
+	npm install elm-test --save-dev
 	npm install uglify-js -g
+	npm install elm-format -g
+
+format:
+	elm-format src/*.elm
 
 test:
 	npx elm-test
@@ -26,4 +28,4 @@ optimize:
 	@echo "Minfied size: $$(cat app.min.js | wc -c) bytes (app.min.js)"
 	@echo "Gzipped size: $$(cat app.min.js | gzip -c | wc -c) bytes"
 
-all: test build
+all: format test build
