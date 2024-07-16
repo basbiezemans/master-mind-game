@@ -3,4 +3,9 @@ elm-stuff
 # elm-repl generated files
 repl-temp-*
 
+# nodejs related files
+node_modules
+package.json
+package-lock.json
+
 app.js
