@@ -19,6 +19,9 @@ test:
 build:
 	elm make src/Main.elm --output app.js
 
+build-debug:
+	elm make src/Main.elm --output app.js --debug
+
 optimize:
 	elm make src/Main.elm --optimize --output=app.js
 	@echo "Optimizing app.js ..."
