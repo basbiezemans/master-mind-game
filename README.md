@@ -8,7 +8,7 @@ Mastermind code-breaking game as a GUI application
 
 ## Compile Elm code to JavaScript
 ```bash
-$ elm make src/Main.elm --output app.js
+make build
 ```
 
 ## Try it on Glitch
