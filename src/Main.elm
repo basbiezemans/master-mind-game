@@ -364,7 +364,7 @@ viewPlay model =
         state =
             model.gamestate
     in
-    div []
+    div [ class "wrapper" ]
         [ div
             [ class "box main rounded" ]
             [ h1 [] [ text "Master Mind" ]
@@ -377,13 +377,13 @@ viewPlay model =
             ]
         , div
             [ class "box feedback rounded" ]
-            (previousGuesses model)
+            [ div [ class "center" ] (previousGuesses model) ]
         ]
 
 
 viewWon : Model -> Html Msg
 viewWon model =
-    div []
+    div [ class "wrapper" ]
         [ div
             [ class "box main rounded" ]
             [ img [ src "assets/img/you-win.gif", title "You win!", class "congrats" ] [] ]
@@ -394,13 +394,13 @@ viewWon model =
             ]
         , div
             [ class "box feedback rounded" ]
-            (previousGuesses model)
+            [ div [ class "center" ] (previousGuesses model) ]
         ]
 
 
 viewLost : Model -> Html Msg
 viewLost model =
-    div []
+    div [ class "wrapper" ]
         [ div
             [ class "box main rounded" ]
             [ h1 [] [ text "Master Mind" ]
@@ -414,17 +414,20 @@ viewLost model =
             ]
         , div
             [ class "box feedback rounded" ]
-            (previousGuesses model)
+            [ div [ class "center" ] (previousGuesses model) ]
         ]
 
 
 toListItem : String -> ( Guess, Feedback ) -> Html msg
 toListItem itemMarker ( guess, feedback ) =
-    let
-        marker =
-            String.padRight 3 ' ' itemMarker
-    in
-    p [] [ text (marker ++ Guess.toString guess ++ " | " ++ Feedback.toString feedback) ]
+    p [ class "hint" ]
+        [ text
+            (String.padRight 3 '\u{00A0}' itemMarker
+                ++ Guess.toString guess
+                ++ " | "
+                ++ Feedback.toString feedback
+            )
+        ]
 
 
 itemMarkers : List String

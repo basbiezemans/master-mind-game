@@ -98,8 +98,12 @@ div.play {
   padding: 15px 10px;
 }
 
+div.center {
+  width: 150px;
+  margin: 0 auto;
+}
+
 div.feedback {
-  padding-left: 20px;
   margin-bottom: 15px;
   background-color: #F2CB05;
 }
