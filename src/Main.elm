@@ -1,5 +1,6 @@
 module Main exposing (main)
 
+import Array
 import Browser
 import Browser.Events exposing (onKeyDown)
 import Dict
@@ -14,7 +15,8 @@ import Maybe exposing (Maybe, withDefault)
 import Ports
 import Random
 import Secret exposing (Secret(..))
-import Utils exposing (maybe)
+import String
+import Utils exposing (flip, listPadRight, maybe)
 
 
 
@@ -425,14 +427,47 @@ toListItem itemMarker ( guess, feedback ) =
             (String.padRight 3 '\u{00A0}' itemMarker
                 ++ Guess.toString guess
                 ++ " | "
-                ++ Feedback.toString feedback
             )
+        , img [ src (svgCircleImage 0 feedback) ] []
+        , img [ src (svgCircleImage 1 feedback) ] []
+        , img [ src (svgCircleImage 2 feedback) ] []
+        , img [ src (svgCircleImage 3 feedback) ] []
         ]
 
 
 itemMarkers : List String
 itemMarkers =
     String.split "" "①②③④⑤⑥⑦⑧⑨⑩"
+
+
+imagePath : String
+imagePath =
+    "assets/img/"
+
+
+svgCircleImage : Int -> Feedback -> String
+svgCircleImage index feedback =
+    let
+        defaultImage =
+            "unknown.svg"
+
+        images =
+            Dict.fromList
+                [ ( 0, defaultImage )
+                , ( 1, "present.svg" )
+                , ( 2, "correct.svg" )
+                ]
+    in
+    feedback
+        |> Feedback.toList
+        |> List.map ((+) 1)
+        |> listPadRight 4 0
+        |> Array.fromList
+        |> Array.get index
+        |> withDefault 0
+        |> flip Dict.get images
+        |> withDefault defaultImage
+        |> (++) imagePath
 
 
 
