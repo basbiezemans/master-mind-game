@@ -1,4 +1,4 @@
-module Feedback exposing (Feedback, makeFeedback, toString)
+module Feedback exposing (Feedback, makeFeedback, toList, toString)
 
 import Guess exposing (Guess(..))
 import Secret exposing (Secret(..))
@@ -61,5 +61,17 @@ toString feedback =
 
         present =
             String.repeat feedback.present "○"
+    in
+    correct ++ present
+
+
+toList : Feedback -> List Int
+toList feedback =
+    let
+        correct =
+            List.repeat feedback.correct 1
+
+        present =
+            List.repeat feedback.present 0
     in
     correct ++ present
