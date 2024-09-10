@@ -56,3 +56,12 @@ maybe defaultVal function maybeVal =
 
         Just val ->
             function val
+
+
+listPadRight : Int -> a -> List a -> List a
+listPadRight n value xs =
+    let
+        ys =
+            List.take n xs
+    in
+    ys ++ List.repeat (n - List.length xs) value
