@@ -448,6 +448,9 @@ imagePath =
 svgCircleImage : Int -> Feedback -> String
 svgCircleImage index feedback =
     let
+        zeroPadRight =
+            listPadRight 0
+
         defaultImage =
             "unknown.svg"
 
@@ -461,7 +464,7 @@ svgCircleImage index feedback =
     feedback
         |> Feedback.toList
         |> List.map ((+) 1)
-        |> listPadRight 0 4
+        |> zeroPadRight 4
         |> Array.fromList
         |> Array.get index
         |> withDefault 0
