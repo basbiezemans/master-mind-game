@@ -461,7 +461,7 @@ svgCircleImage index feedback =
     feedback
         |> Feedback.toList
         |> List.map ((+) 1)
-        |> listPadRight 4 0
+        |> listPadRight 0 4
         |> Array.fromList
         |> Array.get index
         |> withDefault 0

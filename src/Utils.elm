@@ -58,8 +58,8 @@ maybe defaultVal function maybeVal =
             function val
 
 
-listPadRight : Int -> a -> List a -> List a
-listPadRight n value xs =
+listPadRight : a -> Int -> List a -> List a
+listPadRight value n xs =
     let
         ys =
             List.take n xs
