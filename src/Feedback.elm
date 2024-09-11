@@ -11,11 +11,9 @@ type alias Feedback =
     }
 
 
-
--- Take a secret code and a guess, and return feedback which
--- shows how many digits are correct and/or present in the guess.
-
-
+{-| Take a secret code and a guess, and return feedback which
+shows how many digits are correct and/or present in the guess
+-}
 makeFeedback : Secret -> Guess -> Feedback
 makeFeedback secret guess =
     let
