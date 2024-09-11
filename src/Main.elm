@@ -385,10 +385,14 @@ viewPlay model =
 
 viewWon : Model -> Html Msg
 viewWon model =
+    let
+        congratsImg =
+            imagePath ++ "you-win.gif"
+    in
     div [ class "wrapper" ]
         [ div
             [ class "box main rounded" ]
-            [ img [ src "assets/img/you-win.gif", title "You win!", class "congrats" ] [] ]
+            [ img [ src congratsImg, title "You win!", class "congrats" ] [] ]
         , div [ class "box play" ]
             [ button
                 [ class "play", onClick NewGame ]
