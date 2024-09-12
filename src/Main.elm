@@ -428,16 +428,20 @@ viewLost model =
 
 toListItem : String -> ( Guess, Feedback ) -> Html msg
 toListItem itemMarker ( guess, feedback ) =
+    let
+        hint =
+            svgCircleImage feedback
+    in
     p [ class "hint" ]
         [ text
             (String.padRight 3 '\u{00A0}' itemMarker
                 ++ Guess.toString guess
                 ++ " | "
             )
-        , img [ src (svgCircleImage 0 feedback) ] []
-        , img [ src (svgCircleImage 1 feedback) ] []
-        , img [ src (svgCircleImage 2 feedback) ] []
-        , img [ src (svgCircleImage 3 feedback) ] []
+        , img [ src (hint 0) ] []
+        , img [ src (hint 1) ] []
+        , img [ src (hint 2) ] []
+        , img [ src (hint 3) ] []
         ]
 
 
@@ -451,8 +455,8 @@ imagePath =
     "assets/img/"
 
 
-svgCircleImage : Int -> Feedback -> String
-svgCircleImage index feedback =
+svgCircleImage : Feedback -> Int -> String
+svgCircleImage feedback index =
     let
         zeroPadRight =
             listPadRight 0
