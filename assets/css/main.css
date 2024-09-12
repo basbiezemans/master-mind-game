@@ -16,9 +16,19 @@ div.rounded {
 }
 
 h1 {
+  margin-top: 0;
   font-size: 30px;
   color: #1B5084;
   text-align: center;
+}
+
+h5.eyebrow {
+  margin: 5px 0 0 0;
+  color: #1B5084;
+  letter-spacing: 0.5em;
+  font-size: 10px;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 p.sorry {

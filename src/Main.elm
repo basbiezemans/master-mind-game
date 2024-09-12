@@ -6,7 +6,7 @@ import Browser.Events exposing (onKeyDown)
 import Dict
 import Feedback exposing (Feedback, makeFeedback)
 import Guess exposing (Guess(..))
-import Html exposing (Html, button, div, h1, img, p, span, text)
+import Html exposing (Html, button, div, h1, h5, img, p, span, text)
 import Html.Attributes exposing (class, disabled, src, title)
 import Html.Events exposing (onClick)
 import Json.Decode as Decode exposing (decodeString, dict)
@@ -369,7 +369,8 @@ viewPlay model =
     div [ class "wrapper" ]
         [ div
             [ class "box main rounded" ]
-            [ h1 [] [ text "Master Mind" ]
+            [ h5 [ class "eyebrow" ] [ text "Number" ]
+            , h1 [] [ text "Mastermind" ]
             , div [ class "guess" ] [ text (currentGuess model) ]
             ]
         , div
@@ -409,7 +410,8 @@ viewLost model =
     div [ class "wrapper" ]
         [ div
             [ class "box main rounded" ]
-            [ h1 [] [ text "Master Mind" ]
+            [ h5 [ class "eyebrow" ] [ text "Number" ]
+            , h1 [] [ text "Mastermind" ]
             , p [ class "sorry" ] [ text "Sorry, you lost. The secret code was:" ]
             , div [ class "secret" ] [ text (Secret.toString model.secret) ]
             ]
