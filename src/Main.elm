@@ -306,7 +306,7 @@ currentGuess model =
 
 previousGuesses : Model -> List (Html Msg)
 previousGuesses model =
-    List.map2 toListItem itemMarkers model.guesses
+    List.reverse <| List.map2 toListItem itemMarkers model.guesses
 
 
 isDisabled : ButtonType -> GameState -> Bool
