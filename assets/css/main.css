@@ -1,11 +1,11 @@
-body {
-  font-family: 'Source Sans Pro'
-             , 'Trebuchet MS'
-             , 'Lucida Grande'
-             , 'Bitstream Vera Sans'
-             , 'Helvetica Neue'
-             , sans-serif;
+@font-face {
+  font-family: 'Trebuchet';
+  src: url('../fonts/trebuc.woff') format('woff'),
+       url('../fonts/trebuc.ttf') format('truetype');
+}
 
+body {
+  font-family: 'Trebuchet MS', 'Trebuchet', Arial, Helvetica, sans-serif;
   font-size: 18px;
   margin: 0;
   background-color: #F29F05;
