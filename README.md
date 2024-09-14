@@ -1,5 +1,5 @@
-# Mastermind GUI
-Mastermind code-breaking game as a GUI application
+# Mastermind
+Mastermind code-breaking game as a web application ([SPA](https://en.wikipedia.org/wiki/Single-page_application)).
 
 [Mastermind (board game), Wikipedia](https://en.wikipedia.org/wiki/Mastermind_(board_game))
 
