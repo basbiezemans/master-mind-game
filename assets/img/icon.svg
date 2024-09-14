@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="32" height="32">
+	<title>Mastermind-Favicon</title>
+	<style>
+		tspan { white-space:pre }
+		.s0 { fill: #164a7d }
+	</style>
+	<rect width="32" height="32" id="Color Fill 1" style="fill: #f2cb05"/>
+	<path id="M" class="s0" d="m11.9 1.6h-2l-2 9.2-2.1-9.2h-1.9l-0.9 12.4h1.4l0.3-5.6c0.1-1.9 0.2-3.9 0.2-5.3l2.3 9.5h1.4l2.2-9.5c0 1.1 0.1 3.2 0.2 5.2l0.4 5.7h1.4z"/>
+</svg>
