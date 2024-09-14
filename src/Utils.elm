@@ -1,6 +1,6 @@
 module Utils exposing (..)
 
--- Library for generic functions
+-- Library of (generic) utility functions
 
 import List exposing (any, filter)
 import Tuple exposing (first, second)
