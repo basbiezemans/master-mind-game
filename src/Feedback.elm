@@ -1,8 +1,9 @@
 module Feedback exposing (Feedback, makeFeedback, toList, toString)
 
 import Guess exposing (Guess(..))
+import Multiset
 import Secret exposing (Secret(..))
-import Utils exposing (delete, elem, unequal, zip)
+import Utils exposing (unequal, zip)
 
 
 type alias Feedback =
@@ -28,22 +29,19 @@ numCorrect pairs =
     List.length pairs - List.length (unequal pairs)
 
 
-countNumPresent : Int -> ( Int, List Int ) -> ( Int, List Int )
-countNumPresent digit ( tally, secret ) =
-    if elem digit secret then
-        ( tally + 1, delete digit secret )
-
-    else
-        ( tally, secret )
-
-
 numPresent : List ( Int, Int ) -> Int
 numPresent pairs =
     let
         ( secret, digits ) =
             List.unzip pairs
+
+        mset1 =
+            Multiset.fromList secret
+
+        mset2 =
+            Multiset.fromList digits
     in
-    Tuple.first <| List.foldl countNumPresent ( 0, secret ) digits
+    Multiset.size <| Multiset.intersect mset1 mset2
 
 
 listOfPairs : Secret -> Guess -> List ( Int, Int )
