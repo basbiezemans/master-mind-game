@@ -1,7 +1,7 @@
 module MasterMindTests exposing (feedbackTest, unequalTest)
 
 import Expect
-import Feedback exposing (makeFeedback)
+import Feedback exposing (Feedback, makeFeedback)
 import Guess exposing (Guess(..))
 import Secret exposing (Secret(..))
 import Test exposing (..)
@@ -31,7 +31,7 @@ unequalTest =
 -- Feedback for Code Breaker
 
 
-testSingleCase : ( List Int, List Int, Feedback.Feedback ) -> Test
+testSingleCase : ( List Int, List Int, Feedback ) -> Test
 testSingleCase ( code1, code2, feedback ) =
     let
         secret =
@@ -53,7 +53,7 @@ testSingleCase ( code1, code2, feedback ) =
         \_ -> makeFeedback secret guess |> Expect.equal feedback
 
 
-testCases : List ( List Int, List Int, Feedback.Feedback )
+testCases : List ( List Int, List Int, Feedback )
 testCases =
     [ ( [ 1, 2, 3, 4 ], [ 1, 2, 3, 4 ], { correct = 4, present = 0 } )
     , ( [ 6, 2, 4, 3 ], [ 6, 2, 2, 5 ], { correct = 2, present = 0 } )
