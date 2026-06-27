@@ -1,4 +1,4 @@
-module MasterMindTests exposing (feedbackTest, unequalTest)
+module MasterMindTests exposing (testFeedback, testUnequal)
 
 import Expect
 import Feedback exposing (Feedback, makeFeedback)
@@ -12,8 +12,8 @@ import Utils exposing (unequal)
 -- Unequal pairs
 
 
-unequalTest : Test
-unequalTest =
+testUnequal : Test
+testUnequal =
     let
         pairs =
             [ ( 6, 1 ), ( 1, 1 ), ( 6, 3 ), ( 3, 6 ) ]
@@ -67,7 +67,7 @@ testCases =
     ]
 
 
-feedbackTest : Test
-feedbackTest =
+testFeedback : Test
+testFeedback =
     describe "The makeFeedback function should return the correct feedback."
         (List.map testSingleCase testCases)
