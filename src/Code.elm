@@ -39,8 +39,8 @@ push digit (Code array) =
 
 
 equal : Code -> Code -> Bool
-equal (Code xs) (Code ys) =
-    xs == ys
+equal (Code array1) (Code array2) =
+    array1 == array2
 
 
 pop : Code -> Code
