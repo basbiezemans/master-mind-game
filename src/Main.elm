@@ -3,9 +3,9 @@ module Main exposing (main)
 import Array
 import Browser
 import Browser.Events exposing (onKeyDown)
+import Code exposing (Code(..))
 import Dict
 import Feedback exposing (Feedback, makeFeedback)
-import Guess exposing (Guess(..))
 import Html exposing (Html, button, div, h1, h5, img, p, span, text)
 import Html.Attributes exposing (class, disabled, src, title)
 import Html.Events exposing (onClick)
@@ -14,7 +14,6 @@ import Json.Encode as Encode
 import Maybe exposing (Maybe, withDefault)
 import Ports
 import Random
-import Secret exposing (Secret(..))
 import String
 import Utils exposing (flip, listPadRight, maybe)
 
@@ -55,10 +54,10 @@ type alias Score =
 
 type alias Model =
     { counter : LimitCounter
-    , secret : Secret
+    , secret : Code
     , score : Score
-    , guess : Guess
-    , guesses : List ( Guess, Feedback )
+    , guess : Code
+    , guesses : List ( Code, Feedback )
     , gamestate : GameState
     }
 
@@ -70,9 +69,9 @@ type alias Digit =
 init : Maybe String -> ( Model, Cmd Msg )
 init score =
     ( { counter = LimitCounter 0 10
-      , secret = Secret.zeroFill
+      , secret = Code.empty
       , score = maybe (Score 0 0) fromJson score
-      , guess = Guess.empty
+      , guess = Code.empty
       , guesses = []
       , gamestate = Play InitialState
       }
@@ -118,12 +117,12 @@ update msg model =
                     ( latest, saveScore latest.score )
 
         NewSecret code ->
-            ( { model | secret = Secret.fromList code }, Cmd.none )
+            ( { model | secret = Code.fromList code }, Cmd.none )
 
         NewGame ->
             ( { model
                 | counter = LimitCounter 0 10
-                , guess = Guess.empty
+                , guess = Code.empty
                 , guesses = []
                 , gamestate = Play InitialState
               }
@@ -138,14 +137,14 @@ updateGuess digit model =
             model
 
         Just int ->
-            { model | guess = Guess.push int model.guess }
+            { model | guess = Code.push int model.guess }
 
 
 removeLastDigit : Model -> Model
 removeLastDigit model =
     let
         guessLength =
-            Guess.length model.guess
+            Code.length model.guess
 
         buttonState =
             if guessLength > 1 then
@@ -155,7 +154,7 @@ removeLastDigit model =
                 InitialState
     in
     { model
-        | guess = Guess.pop model.guess
+        | guess = Code.pop model.guess
         , gamestate = Play buttonState
     }
 
@@ -166,16 +165,11 @@ addSelectedDigit digit model =
         latest =
             updateGuess digit model
     in
-    if Guess.isReady latest.guess then
+    if Code.isValid latest.guess then
         { latest | gamestate = Play ReadyState }
 
     else
         { latest | gamestate = Play SelectState }
-
-
-equalCode : Guess -> Secret -> Bool
-equalCode (Guess xs) (Secret ys) =
-    xs == ys
 
 
 evaluateGuess : Model -> Model
@@ -192,7 +186,7 @@ evaluateGuess model =
                 | guesses = model.guesses ++ [ ( model.guess, feedback ) ]
             }
     in
-    if equalCode latest.guess model.secret then
+    if Code.equal latest.guess model.secret then
         setGameState Won (addCodeBreakerPoint latest)
 
     else if isGameOver latest then
@@ -200,7 +194,7 @@ evaluateGuess model =
 
     else
         { latest
-            | guess = Guess.empty
+            | guess = Code.empty
             , gamestate = Play InitialState
         }
 
@@ -228,12 +222,7 @@ incCounter model =
 
 randomCode : Cmd Msg
 randomCode =
-    Random.generate NewSecret randomInts
-
-
-randomInts : Random.Generator (List Int)
-randomInts =
-    Random.list 4 (Random.int 1 6)
+    Random.generate NewSecret Code.random
 
 
 setGameState : GameState -> Model -> Model
@@ -298,7 +287,7 @@ view model =
 currentGuess : Model -> String
 currentGuess model =
     model.guess
-        |> Guess.toList
+        |> Code.toList
         |> List.map String.fromInt
         |> List.foldr (++) ""
         |> String.padRight 4 '_'
@@ -413,7 +402,7 @@ viewLost model =
             [ h5 [ class "eyebrow" ] [ text "Number" ]
             , h1 [] [ text "Mastermind" ]
             , p [ class "sorry" ] [ text "Sorry, you lost. The secret code was:" ]
-            , div [ class "secret" ] [ text (Secret.toString model.secret) ]
+            , div [ class "secret" ] [ text (Code.toString model.secret) ]
             ]
         , div [ class "box play" ]
             [ button
@@ -426,7 +415,7 @@ viewLost model =
         ]
 
 
-toListItem : String -> ( Guess, Feedback ) -> Html msg
+toListItem : String -> ( Code, Feedback ) -> Html msg
 toListItem itemMarker ( guess, feedback ) =
     let
         hint =
@@ -435,7 +424,7 @@ toListItem itemMarker ( guess, feedback ) =
     p [ class "hint" ]
         [ text
             (String.padRight 3 '\u{00A0}' itemMarker
-                ++ Guess.toString guess
+                ++ Code.toString guess
                 ++ " | "
             )
         , img [ src (hint 0) ] []
