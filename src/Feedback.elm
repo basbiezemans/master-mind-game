@@ -1,8 +1,7 @@
 module Feedback exposing (Feedback, makeFeedback, toList, toString)
 
-import Guess exposing (Guess(..))
+import Code exposing (Code(..))
 import Multiset
-import Secret exposing (Secret(..))
 import Utils exposing (unequal, zip)
 
 
@@ -15,11 +14,11 @@ type alias Feedback =
 {-| Take a secret code and a guess, and return feedback which
 shows how many digits are correct and/or present in the guess
 -}
-makeFeedback : Secret -> Guess -> Feedback
-makeFeedback secret guess =
+makeFeedback : Code -> Code -> Feedback
+makeFeedback code1 code2 =
     let
         pairs =
-            listOfPairs secret guess
+            listOfPairs code1 code2
     in
     Feedback (numCorrect pairs) (numPresent <| unequal pairs)
 
@@ -32,21 +31,21 @@ numCorrect pairs =
 numPresent : List ( Int, Int ) -> Int
 numPresent pairs =
     let
-        ( secret, digits ) =
+        ( code1, code2 ) =
             List.unzip pairs
 
         mset1 =
-            Multiset.fromList secret
+            Multiset.fromList code1
 
         mset2 =
-            Multiset.fromList digits
+            Multiset.fromList code2
     in
     Multiset.size <| Multiset.intersect mset1 mset2
 
 
-listOfPairs : Secret -> Guess -> List ( Int, Int )
-listOfPairs secret guess =
-    zip (Secret.toList secret) (Guess.toList guess)
+listOfPairs : Code -> Code -> List ( Int, Int )
+listOfPairs code1 code2 =
+    zip (Code.toList code1) (Code.toList code2)
 
 
 toString : Feedback -> String

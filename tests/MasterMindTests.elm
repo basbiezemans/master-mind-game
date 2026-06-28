@@ -1,9 +1,8 @@
 module MasterMindTests exposing (testFeedback, testUnequal)
 
+import Code exposing (Code(..))
 import Expect
 import Feedback exposing (Feedback, makeFeedback)
-import Guess exposing (Guess(..))
-import Secret exposing (Secret(..))
 import Test exposing (..)
 import Utils exposing (unequal)
 
@@ -32,25 +31,25 @@ testUnequal =
 
 
 testSingleCase : ( List Int, List Int, Feedback ) -> Test
-testSingleCase ( code1, code2, feedback ) =
+testSingleCase ( list1, list2, feedback ) =
     let
-        secret =
-            Secret.fromList code1
+        code1 =
+            Code.fromList list1
 
-        guess =
-            Guess.fromList code2
+        code2 =
+            Code.fromList list2
 
         makeFeedbackTestCase =
             String.join " "
                 [ "makeFeedback"
-                , Secret.toString secret
-                , Guess.toString guess
+                , Code.toString code1
+                , Code.toString code2
                 , "=="
                 , Feedback.toString feedback
                 ]
     in
     test makeFeedbackTestCase <|
-        \_ -> makeFeedback secret guess |> Expect.equal feedback
+        \_ -> makeFeedback code1 code2 |> Expect.equal feedback
 
 
 testCases : List ( List Int, List Int, Feedback )
