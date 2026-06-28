@@ -1,4 +1,4 @@
-module MasterMindTests exposing (testFeedback, testUnequal)
+module MasterMindTests exposing (testCodeIsValid, testFeedback, testUnequal)
 
 import Code exposing (Code(..))
 import Expect
@@ -70,3 +70,20 @@ testFeedback : Test
 testFeedback =
     describe "The makeFeedback function should return the correct feedback."
         (List.map testSingleCase testCases)
+
+
+testCodeIsValid : Test
+testCodeIsValid =
+    describe "The isValid function validates a given code."
+        (List.map
+            (\{ given, expected } ->
+                test (Code.toString given) <|
+                    \_ -> Expect.equal expected (Code.isValid given)
+            )
+            [ { given = Code.fromList [ 0, 1, 2, 3 ], expected = False }
+            , { given = Code.fromList [ 1, 2, 3, 7 ], expected = False }
+            , { given = Code.fromList [ 1, 2, 3 ], expected = False }
+            , { given = Code.fromList [ 1, 2, 3, 4, 5 ], expected = False }
+            , { given = Code.fromList [ 1, 2, 3, 6 ], expected = True }
+            ]
+        )

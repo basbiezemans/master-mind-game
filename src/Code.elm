@@ -2,6 +2,7 @@ module Code exposing (..)
 
 import Array exposing (Array(..))
 import Random
+import Regex
 
 
 type Code
@@ -58,8 +59,14 @@ isEmpty (Code array) =
 
 
 isValid : Code -> Bool
-isValid (Code array) =
-    Array.length array == 4 -- TODO: proper validation
+isValid code =
+    case Regex.fromString "^[1-6]{4}$" of
+        Just regex ->
+            Regex.contains regex (toString code)
+
+        -- The pattern is valid, so this shouldn't happen
+        Nothing ->
+            False
 
 
 toString : Code -> String
