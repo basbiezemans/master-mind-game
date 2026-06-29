@@ -11,5 +11,5 @@ Mastermind code-breaking game as a web application ([SPA](https://en.wikipedia.o
 make build
 ```
 
-## Try it on Glitch
-https://master-mind-game.glitch.me/
+## Try it on Vercel
+https://master-mind-game-coral.vercel.app/
